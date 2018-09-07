@@ -55,28 +55,28 @@ describe('Substitution cipher', () => {
   const key = 'abcdefghij';
   const simpleCipher = new SimpleCipher(key);
 
-  xit('keeps the submitted key', () => {
+  it('keeps the submitted key', () => {
     expect(simpleCipher.key).toEqual(key)
   });
 
-  xit('can encode', () => {
+  it('can encode', () => {
     expect(simpleCipher.encode('aaaaaaaaaa')).toEqual('abcdefghij')
   });
 
-  xit('can decode', () => {
+  it('can decode', () => {
     expect(simpleCipher.decode('abcdefghij')).toEqual('aaaaaaaaaa')
   });
 
-  xit('is reversible', () => {
+  it('is reversible', () => {
     expect(simpleCipher.decode(simpleCipher.encode('abcdefghij'))).toEqual('abcdefghij')
   });
 
-  xit(': double shift encode', () => {
+  it(': double shift encode', () => {
     expect(new SimpleCipher('iamapandabear').encode('iamapandabear'))
       .toEqual('qayaeaagaciai')
   });
 
-  xit('can wrap on encode', () => {
+  it('can wrap on encode', () => {
     expect(simpleCipher.encode('zzzzzzzzzz')).toEqual('zabcdefghi')
   });
 
