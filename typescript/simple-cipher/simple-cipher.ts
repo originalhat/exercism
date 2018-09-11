@@ -13,6 +13,10 @@ class SimpleCipher {
   encode(decodedMessage: string) {
     let encoded: Array<string> = [];
 
+    while (this.key.length < decodedMessage.length) {
+      this.key = this.key.concat(this.key)
+    }
+
     for (let i = 0; i < decodedMessage.length; i++) {
       let shiftedCharCode = decodedMessage.charCodeAt(i) + (this.key.charCodeAt(i) - 97);
 
