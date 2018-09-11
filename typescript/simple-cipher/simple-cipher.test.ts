@@ -80,7 +80,7 @@ describe('Substitution cipher', () => {
     expect(simpleCipher.encode('zzzzzzzzzz')).toEqual('zabcdefghi')
   });
 
-  xit('can wrap on decode', () => {
+  it('can wrap on decode', () => {
     expect(simpleCipher.decode('zabcdefghi')).toEqual('zzzzzzzzzz')
   });
 

@@ -15,7 +15,12 @@ class SimpleCipher {
 
     for (let i = 0; i < decodedMessage.length; i++) {
       let shiftedCharCode = decodedMessage.charCodeAt(i) + (this.key.charCodeAt(i) - 97);
-      encoded.push(shiftedCharCode >= 123 ? String.fromCharCode(shiftedCharCode - 26) : String.fromCharCode(shiftedCharCode));
+
+      if (shiftedCharCode >= 123) {
+        encoded.push(String.fromCharCode(shiftedCharCode - 26));
+      } else {
+        encoded.push(String.fromCharCode(shiftedCharCode))
+      }
     }
 
     return encoded.join('');
@@ -26,7 +31,13 @@ class SimpleCipher {
     let decoded: Array<string> = [];
 
     for (let i = 0; i < encodedMessage.length; i++) {
-      decoded.push(String.fromCharCode(encodedMessage.charCodeAt(i) - (this.key.charCodeAt(i) - 97)))
+      let shiftedCharCode = encodedMessage.charCodeAt(i) - (this.key.charCodeAt(i) - 97);
+
+      if (shiftedCharCode < 97) {
+        decoded.push(String.fromCharCode(shiftedCharCode + 26));
+      } else {
+        decoded.push(String.fromCharCode(shiftedCharCode))
+      }
     }
 
     return decoded.join('');
