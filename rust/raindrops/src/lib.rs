@@ -1,19 +1,12 @@
 pub fn raindrops(n: u32) -> String {
-    let mut sound = String::from("");
+    let is_factor = |factor| n % factor == 0;
+    let mut rez = String::new();
 
-    if n % 3 == 0 || n % 5 == 0 || n % 7 == 0 {
-        if n % 3 == 0 {
-            sound.push_str("Pling")
-        }
-        if n % 5 == 0 {
-            sound.push_str("Plang");
-        }
-        if n % 7 == 0 {
-            sound.push_str("Plong");
-        }
-    } else {
-        sound = n.to_string();
-    }
+    if is_factor(3) { rez.push_str("Pling"); }
+    if is_factor(5) { rez.push_str("Plang"); }
+    if is_factor(7) { rez.push_str("Plong"); }
 
-    return sound;
+    if rez.is_empty() { rez = n.to_string(); }
+
+    rez
 }
