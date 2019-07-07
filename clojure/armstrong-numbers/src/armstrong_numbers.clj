@@ -1,7 +1,12 @@
 (ns armstrong-numbers
   (:require [clojure.math.numeric-tower :as math]))
 
-(defn armstrong? [num]
-  (let [digits (clojure.string/split (str num) #"")
-        power (count digits)]
-    (= (reduce + (map (fn [a] (math/expt (Integer/parseInt a) power)) digits)) num)))
+(defn armstrong?
+  [num]
+  (->> (str num)
+       seq
+       (map str)
+       (map read-string)
+       (map #(math/expt % (count (str num))))
+       (reduce +)
+       (= num)))
