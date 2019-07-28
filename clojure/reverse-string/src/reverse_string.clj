@@ -2,8 +2,7 @@
 
 (defn reverse-string
   [s]
-  (clojure.string/join
-    (reverse
-      (clojure.string/split s #""))))
-
+  (-> (clojure.string/split s #"")
+      (reverse)
+      (clojure.string/join)))
 
