@@ -8,4 +8,5 @@
   [sentence]
   (cond
     (= 0 (count (s/trim sentence))) "Fine. Be that way!"
+    (every? #(Character/isUpperCase %) (clojure.string/replace sentence #"[^\p{L}]" "")) "Whoa, chill out!"
     :else "Whatever."))
