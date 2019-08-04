@@ -10,3 +10,4 @@
        (map #(math/expt % (count (str num))))
        (reduce +)
        (= num)))
+
