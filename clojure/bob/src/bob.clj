@@ -6,7 +6,14 @@
   [sentence]
   (every?
     #(Character/isUpperCase %)
-    (clojure.string/replace sentence #"[^\p{L}]" "")))
+    (s/replace sentence #"[^\p{L}]" "")))
+
+(defn- is-only-numbers?
+  "Returns true if the entire sentence is numeric, save special chars."
+  [sentence]
+  (every?
+    #(Character/isDigit %)
+    (s/replace sentence #"[^\p{L}|\d]" "")))
 
 (defn- is-quiet?
   "Returns true if there is no response."
@@ -22,6 +29,9 @@
   [sentence]
   (cond
     (is-quiet? sentence) "Fine. Be that way!"
-    (is-shouting? sentence) "Whoa, chill out!"
+    (and (is-only-numbers? sentence) (is-question? sentence)) "Sure."
+    (and (is-question? sentence) (is-shouting? sentence)) "Calm down, I know what I'm doing!"
     (is-question? sentence) "Sure."
+    (is-only-numbers? sentence) "Whatever."
+    (is-shouting? sentence) "Whoa, chill out!"
     :else "Whatever."))
