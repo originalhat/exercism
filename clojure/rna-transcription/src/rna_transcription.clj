@@ -1,5 +1,9 @@
 (ns rna-transcription)
 
-(defn to-rna [dna] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn to-rna
+  [dna]
+  (cond
+    (= "C" dna) "G"
+    (= "G" dna) "C"
+    (= "A" dna) "U"
+    (= "T" dna) "A"))
