@@ -1,9 +1,19 @@
 (ns rna-transcription)
 
+(defn- translate-nucleotide
+  [nucleotide]
+  (cond
+    (= "C" nucleotide) "G"
+    (= "G" nucleotide) "C"
+    (= "A" nucleotide) "U"
+    (= "T" nucleotide) "A"))
+
+(defn- valid-dna?
+  [dna]
+  (= 0 (count (re-seq #"[^CGAT]" dna))))
+
 (defn to-rna
   [dna]
-  (cond
-    (= "C" dna) "G"
-    (= "G" dna) "C"
-    (= "A" dna) "U"
-    (= "T" dna) "A"))
+  (if (valid-dna? dna)
+    (clojure.string/replace dna #"[CGAT]" #(translate-nucleotide %1))
+    ((throw (AssertionError. "invalid nucleotide")))))
