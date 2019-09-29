@@ -5,12 +5,12 @@
   ([]
    (run-length-encode ""))
   ([plain-text]
-   (apply str
-          (mapcat #(if (= 1 (count %))
-                     [(first %)]
-                     [(count %) (first %)])
-                  (partition-by identity
-                                (clojure.string/split plain-text #""))))))
+   (->> plain-text
+        (partition-by identity)
+        (mapcat #(if (= 1 (count %))
+                   [(first %)]
+                   [(count %) (first %)]))
+        (apply str))))
 
 (defn run-length-decode
   "decodes a run-length-encoded string"
