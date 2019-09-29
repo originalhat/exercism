@@ -14,4 +14,12 @@
 
 (defn run-length-decode
   "decodes a run-length-encoded string"
-  [cipher-text])
+  ([]
+   (run-length-decode ""))
+  ([cipher-text]
+   (apply str (mapcat #(if (= 1 (count %))
+                         %
+                         (repeat
+                           (Integer/parseInt (apply str (drop-last %)))
+                           (last %)))
+                      (re-seq #"[1-9]*[a-zA-Z\W]" cipher-text)))))
