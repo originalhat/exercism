@@ -17,9 +17,15 @@
   ([]
    (run-length-decode ""))
   ([cipher-text]
-   (apply str (mapcat #(if (= 1 (count %))
-                         %
-                         (repeat
-                           (Integer/parseInt (apply str (drop-last %)))
-                           (last %)))
-                      (re-seq #"[1-9]*[a-zA-Z\W]" cipher-text)))))
+   (->> cipher-text
+        (re-seq #"[1-9]*[a-zA-Z\W]")
+        (mapcat #(if (= 1 (count %))
+                   %
+                   (repeat
+                     (->>
+                       %
+                       drop-last
+                       (apply str)
+                       (Integer/parseInt))
+                     (last %))))
+        (apply str))))
