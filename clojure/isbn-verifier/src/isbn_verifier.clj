@@ -10,15 +10,13 @@
   (let [processed-isbn (as-> isbn s
                              (str/replace s #"-" "")
                              (str/split s #"")
-                             (conj
-                               (vec (drop-last s))
-                               (str/replace (last s) #"X" "10"))
+                             (conj (vec (drop-last s)) (str/replace (last s) #"X" "10"))
                              (map read-string s)
                              (reverse s)
                              (vec s))]
 
     (if (valid-isbn? processed-isbn)
-      (= 0 (mod (->> processed-isbn
-                     (map-indexed (fn [idx itm] (* (+ idx 1) itm)))
-                     (reduce +)) 11))
+      (zero? (mod (->> processed-isbn
+                       (map-indexed (fn [idx itm] (* (+ idx 1) itm)))
+                       (reduce +)) 11))
       false)))
