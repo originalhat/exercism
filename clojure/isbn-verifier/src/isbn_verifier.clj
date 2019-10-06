@@ -1,22 +1,30 @@
 (ns isbn-verifier
   (:require [clojure.string :as str]))
 
+(defn- parse-isbn
+  [isbn]
+  (as-> isbn s
+        (str/replace s #"-" "")
+        (str/split s #"")
+        (conj (vec (drop-last s)) (str/replace (last s) #"X" "10"))
+        (map read-string s)
+        (reverse s)
+        (vec s)))
+
+(defn- valid-isbn-shape?
+  [parsed-isbn]
+  (and (= 10 (count parsed-isbn))
+       (some? (re-matches #"\d+" (str/join parsed-isbn)))))
+
 (defn- valid-isbn?
-  [processed-isbn]
-  (and (= 10 (count processed-isbn))
-       (some? (re-matches #"\d+" (str/join processed-isbn)))))
+  [parsed-isbn]
+  (zero?
+    (mod (->> parsed-isbn
+              (map-indexed (fn [idx itm] (* (+ idx 1) itm)))
+              (reduce +)) 11)))
 
 (defn isbn? [isbn]
-  (let [processed-isbn (as-> isbn s
-                             (str/replace s #"-" "")
-                             (str/split s #"")
-                             (conj (vec (drop-last s)) (str/replace (last s) #"X" "10"))
-                             (map read-string s)
-                             (reverse s)
-                             (vec s))]
-
-    (if (valid-isbn? processed-isbn)
-      (zero? (mod (->> processed-isbn
-                       (map-indexed (fn [idx itm] (* (+ idx 1) itm)))
-                       (reduce +)) 11))
+  (let [parsed-isbn (parse-isbn isbn)]
+    (if (valid-isbn-shape? parsed-isbn)
+      (valid-isbn? parsed-isbn)
       false)))
