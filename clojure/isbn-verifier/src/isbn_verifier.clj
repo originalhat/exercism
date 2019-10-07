@@ -25,6 +25,4 @@
 
 (defn isbn? [isbn]
   (let [parsed-isbn (parse-isbn isbn)]
-    (if (valid-isbn-shape? parsed-isbn)
-      (valid-isbn? parsed-isbn)
-      false)))
+    (and (valid-isbn-shape? parsed-isbn) (valid-isbn? parsed-isbn))))
