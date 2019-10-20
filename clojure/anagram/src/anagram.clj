@@ -5,5 +5,5 @@
   (->> prospect-list
        (filter #(not= (str/lower-case word) %))
        (filter #(= (count word) (count %)))
-       (filter #(= (sort (re-seq #"\w" (str/lower-case word)))
-                   (sort (re-seq #"\w" (str/lower-case %)))))))
+       (filter #(= (sort (str/lower-case word))
+                   (sort (str/lower-case %))))))
