@@ -1,17 +1,6 @@
-defmodule Letter do
-  defstruct letter: 0
-
-  defmacro is_lowercase(char) do
-    quote do: unquote(char) >= 97 and unquote(char) <= 122
-  end
-
-  defmacro is_uppercase(char) do
-    quote do: unquote(char) >= 65 and unquote(char) <= 90
-  end
-end
-
 defmodule RotationalCipher do
-  import Letter
+  @upper ?A..?Z
+  @lower ?a..?z
 
   @doc """
   Given a plaintext and amount to shift by, return a rotated string.
@@ -24,21 +13,15 @@ defmodule RotationalCipher do
   def rotate(text, shift) do
     text
     |> String.to_charlist
-    |> Enum.map(&shift_char(&1, shift))
+    |> Enum.map(&rotate_char(&1, shift))
     |> String.Chars.to_string
   end
 
-  defp shift_char(char, shift) when is_lowercase(char) and char + shift > 122 do
-    Integer.mod(char + shift, 123) + 97
+  defp rotate_char(char, shift) do
+    cond do
+      char in @upper -> Integer.mod(char - ?A + shift, 26) + ?A
+      char in @lower -> Integer.mod(char - ?a + shift, 26) + ?a
+      true           -> char
+    end
   end
-
-  defp shift_char(char, shift) when is_uppercase(char) and char + shift > 90 do
-    Integer.mod(char + shift, 91) + 65
-  end
-
-  defp shift_char(char, shift) when is_uppercase(char) or is_lowercase(char) do
-    char + shift
-  end
-
-  defp shift_char(char, _), do: char
 end
