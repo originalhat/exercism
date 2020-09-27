@@ -3,34 +3,18 @@ defmodule RomanNumerals do
   Convert the number to a roman number.
   """
   @spec numeral(pos_integer) :: String.t()
-
-  # def numeral(number) do
-  #   cond do
-  #     div(number, 40) > 0 -> numeral(rem(number, 40)) <> scribe(div(number, 40), "L")
-  #     div(number, 10) > 0 -> scribe(div(number, 10), "X") <> numeral(rem(number, 10))
-  #     div(number, 9) > 0 -> numeral(div(number, 9)) <> scribe(div(number, 9), "X")
-  #     div(number, 5) > 0 -> scribe(div(number, 5), "V") <> numeral(rem(number, 5))
-  #     div(number, 4) > 0 -> numeral(div(number, 4)) <> scribe(div(number, 4), "V")
-  #     number > 0 -> scribe(number, "I")
-  #     true -> ""
-  #   end
-  # end
-
-
-  def numeral(number, acc), do: acc <> "I"
-  def numeral(1, acc), do: acc <> "I"
-  def numeral(number), do: numeral(number, "")
-
-  # def numeral(number) when number >= 10, do: scribe(1, "X")
-  # def numeral(number) when number >= 9, do: scribe(1, "I") <> scribe(1, "X")
-  # def numeral(number) when number >= 6, do: scribe(1, "V") <> scribe(number - rem(5, number), "I")
-  # def numeral(number) when number >= 5, do: scribe(1, "V")
-  # def numeral(number) when number >= 4, do: scribe(1, "I") <> scribe(1, "V")
-  # def numeral(number), do: scribe(number, "I")
-
-  def scribe(number, sym) do
-    1..number
-    |> Enum.map(fn _ -> sym end)
-    |> Enum.join
-  end
+  def numeral(0), do: ""
+  def numeral(n) when n >= 1000, do: "M" <> numeral(n-1000)
+  def numeral(n) when n >= 900, do: "CM" <> numeral(n-900)
+  def numeral(n) when n >= 500, do: "D" <> numeral(n-500)
+  def numeral(n) when n >= 400, do: "CD" <> numeral(n-400)
+  def numeral(n) when n >= 100, do: "C" <> numeral(n-100)
+  def numeral(n) when n >= 90, do: "XC" <> numeral(n-90)
+  def numeral(n) when n >= 50, do: "L" <> numeral(n-50)
+  def numeral(n) when n >= 40, do: "XL" <> numeral(n-40)
+  def numeral(n) when n >= 10, do: "X" <> numeral(n-10)
+  def numeral(n) when n >= 9, do: "IX" <> numeral(n-9)
+  def numeral(n) when n >= 5, do: "V" <> numeral(n-5)
+  def numeral(n) when n >= 4, do: "IV" <> numeral(n-4)
+  def numeral(n), do: "I" <> numeral(n-1)
 end
