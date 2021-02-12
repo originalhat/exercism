@@ -13,7 +13,8 @@ defmodule Raindrops do
   @spec convert(pos_integer) :: String.t()
   def convert(number) do
     Map.keys(@sounds)
-    |> Enum.filter_map(&(factor?(number, &1)), &(@sounds[&1]))
+    |> Enum.filter(&(factor?(number, &1)))
+    |> Enum.map(&(@sounds[&1]))
     |> to_string_with_default(number)
   end
 
