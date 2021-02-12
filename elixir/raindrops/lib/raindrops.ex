@@ -1,4 +1,6 @@
 defmodule Raindrops do
+  @sounds %{ 3 => "Pling", 5 => "Plang", 7 => "Plong" }
+
   @doc """
   Returns a string based on raindrop factors.
 
@@ -10,19 +12,14 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t()
   def convert(number) do
-
-    # conditionally append strings
-
-    list = if factor?(number, 3), do: ["Pling"], else: []
-    list = if factor?(number, 5), do: list ++ ["Plang"], else: list
-    list = if factor?(number, 7), do: list ++ ["Plong"], else: list
-
-    if Enum.count(list) > 0 do
-      Enum.join(list)
-    else
-      Integer.to_string(number)
-    end
+    Map.keys(@sounds)
+    |> Enum.filter_map(&(factor?(number, &1)), &(@sounds[&1]))
+    |> to_string_with_default(number)
   end
 
+  @spec factor?(n :: [String.t()], factor :: integer) :: boolean()
   defp factor?(n, factor), do: rem(n, factor) == 0
+
+  defp to_string_with_default([], default), do: Integer.to_string(default)
+  defp to_string_with_default(list, _default), do: Enum.join(list)
 end
