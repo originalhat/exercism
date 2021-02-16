@@ -1,18 +1,14 @@
 defmodule Sublist do
-  @doc """
-  Returns whether the first list is a sublist or a superlist of the second list
-  and if not whether it is equal or unequal to the second list.
-  """
+  @spec compare(a :: [integer()], b :: [integer()]) :: atom()
   def compare(a, b) do
-    a_set = MapSet.new(a)
-    b_set = MapSet.new(b)
-
     cond do
       a == b -> :equal
-      MapSet.subset?(a_set, b_set) and Enum.count(a) < Enum.count(b) -> :sublist
-      MapSet.subset?(b_set, a_set) and Enum.count(b) < Enum.count(a) -> :superlist
+      sublist?(b, a) -> :sublist
+      sublist?(a, b) -> :superlist
       true -> :unequal
     end
-
   end
+
+  defp sublist?([], _), do: false
+  defp sublist?(l1 = [_ | t], l2), do: List.starts_with?(l1, l2) or sublist?(t, l2)
 end
