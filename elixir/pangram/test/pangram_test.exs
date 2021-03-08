@@ -41,12 +41,12 @@ defmodule PangramTest do
     assert Pangram.pangram?("Five quacking Zephyrs jolt my wax bed.")
   end
 
-  @tag :pending
+  # @tag :pending
   test "pangram with non ascii characters" do
     assert Pangram.pangram?("Victor jagt zwölf Boxkämpfer quer über den großen Sylter Deich.")
   end
 
-  @tag :pending
+  # @tag :pending
   test "pangram in alphabet other than ASCII" do
     refute Pangram.pangram?(
              "Широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства."
