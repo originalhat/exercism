@@ -13,14 +13,30 @@ defmodule DndCharacter do
 
   @spec modifier(pos_integer()) :: integer()
   def modifier(score) do
-    (score - 10) / 2 |> Float.floor() |> Kernel.trunc()
+    ((score - 10) / 2) |> Float.floor() |> Kernel.trunc()
   end
 
   @spec ability :: pos_integer()
   def ability do
+    [0, 0, 0, 0]
+    |> Enum.map(fn _ -> Enum.random(1..6) end)
+    |> Enum.sort()
+    |> Enum.drop(1)
+    |> Enum.sum()
   end
 
   @spec character :: t()
   def character do
+    constitution = ability()
+
+    %{
+      strength: ability(),
+      dexterity: ability(),
+      constitution: constitution,
+      intelligence: ability(),
+      wisdom: ability(),
+      charisma: ability(),
+      hitpoints: modifier(constitution) + 10
+    }
   end
 end
