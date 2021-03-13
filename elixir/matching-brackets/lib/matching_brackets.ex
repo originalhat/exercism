@@ -4,18 +4,21 @@ defmodule MatchingBrackets do
   """
   @spec check_brackets(String.t()) :: boolean
   def check_brackets(str) do
-    str = String.replace(str, ~r/\s/, "")
+    str
+    |> String.replace(~r/[^\[\]\{\}\(\)]/, "")
+    |> check
+  end
 
-    case String.length(str) do
-      0 ->
-        true
+  defp check(str, prev \\ "")
+  defp check("", _), do: true
+  defp check(str, prev) when str == prev, do: false
 
-      2 ->
-        [h | t] = str |> String.to_charlist()
-        h + 2 == hd(t)
-
-      _ ->
-        false
-    end
+  defp check(str, _) do
+    check(
+      str
+      |> String.split(~r/(\(\))|(\[\])|(\{\})/)
+      |> Enum.join(),
+      str
+    )
   end
 end
