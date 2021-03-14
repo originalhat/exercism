@@ -41,22 +41,18 @@ defmodule TriangleTest do
     assert Triangle.kind(0.4, 0.6, 0.3) == {:ok, :scalene}
   end
 
-  @tag :pending
   test "triangles with no size are illegal" do
     assert Triangle.kind(0, 0, 0) == {:error, "all side lengths must be positive"}
   end
 
-  @tag :pending
   test "triangles with negative sides are illegal" do
     assert Triangle.kind(3, 4, -5) == {:error, "all side lengths must be positive"}
   end
 
-  @tag :pending
   test "triangles violating triangle inequality are illegal" do
     assert Triangle.kind(1, 1, 3) == {:error, "side lengths violate triangle inequality"}
   end
 
-  @tag :pending
   test "triangles violating triangle inequality are illegal 3" do
     assert Triangle.kind(7, 3, 2) == {:error, "side lengths violate triangle inequality"}
   end
