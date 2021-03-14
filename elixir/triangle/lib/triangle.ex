@@ -16,7 +16,6 @@ defmodule Triangle do
       1 -> {:ok, :equilateral}
       2 -> {:ok, :isosceles}
       3 -> {:ok, :scalene}
-      _ -> :error
     end
   end
 end
