@@ -12,7 +12,7 @@ defmodule Triangle do
   """
   @spec kind(number, number, number) :: {:ok, kind} | {:error, String.t()}
   def kind(a, b, c) do
-    case Enum.count(MapSet.new([a, b, c])) do
+    case Enum.count(Enum.uniq([a, b, c])) do
       1 -> {:ok, :equilateral}
       2 -> {:ok, :isosceles}
       3 -> {:ok, :scalene}
